@@ -45,30 +45,25 @@ const LETTER_VALUES = {
   
   function wordScores(word) {
     let total = 0;
-  
-    if (includesWeirdChar(word)) {
-        total = null;
-    } 
-    else {
-        let letters = word.split('');
-        letters.forEach(letter => total += LETTER_VALUES[letter.toUpperCase()]);
-    }
+    let letters = word.split('');
+    letters.forEach(function(letter) { 
+        includesWeirdChar(letter) ? total = total : total += LETTER_VALUES[letter.toUpperCase()] 
+    });
+    
     
     return total;
 }
 
 /** checks a word for strange characters and returns true or false */
 
-function includesWeirdChar(word) {
-    
-    for (let char of word) {
-        if (!LETTER_VALUES[char.toUpperCase()]) return true;
-    }
-  
+function includesWeirdChar(letter) {
+    if (!LETTER_VALUES[letter.toUpperCase()]) return true;
     return false;
   }
 
-  function formSubmit(evt) {
+/** when the form submits, calculate total of each name and append to page */
+
+function formSubmit(evt) {
     evt.preventDefault();
     
     let container = document.getElementById("container");
@@ -79,12 +74,12 @@ function includesWeirdChar(word) {
     returnMsg.setAttribute("id", "return-message");
     container.append(returnMsg);
     
-    returnMsg.innerText = `${firstName}: ${wordScores(firstName)}, ${lastName}: ${wordScores(lastName)}, Total: ${wordScores(firstName) + wordScores(lastName)}`;
+    returnMsg.innerText = `${firstName}: ${wordScores(firstName)} | ${lastName}: ${wordScores(lastName)} | Total: ${wordScores(firstName) + wordScores(lastName)}`;
     
     form.reset();
 }
 
 
-  let form = document.getElementById("names-form");
-  form.addEventListener("submit", formSubmit);
+let form = document.getElementById("names-form");
+form.addEventListener("submit", formSubmit);
   
