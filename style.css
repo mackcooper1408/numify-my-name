@@ -1,0 +1,43 @@
+body {
+    background-color: beige;
+
+}
+
+header {
+    font-size: 2em;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    margin: 0 auto;
+    font-size: 1.5em;
+    border: 2px solid black;
+    border-radius: 2px;
+}
+
+#input-names form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#submit-button {
+    width: 75px;
+    margin: 10px auto 0 auto;
+}
+
+#return-message {
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 50%;
+    height: 30px;
+    text-align: center;
+    margin: 10px;
+}
