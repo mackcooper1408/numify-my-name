@@ -41,27 +41,47 @@ const LETTER_VALUES = {
 //     return scores;
 //   }
   
-/* git the total of each word by adding up value of letters */
+/** get the total of each word by adding up value of letters */
   
-  function wordScores(word) {
+function wordScores(word) {
     let total = 0;
     let letters = word.split('');
-    letters.forEach(function(letter) { 
-        includesWeirdChar(letter) ? total = total : total += LETTER_VALUES[letter.toUpperCase()] 
-    });
+
+    if (includesWeirdChar(word)) {return "Please do not use spaces or non-letter characters"}
     
+    letters.forEach(letter => total += LETTER_VALUES[letter.toUpperCase()]);
     
     return total;
 }
 
+function totalNameScore(first, last) {
+    if (includesWeirdChar(first) || includesWeirdChar(last)) {return "One of your inputs is invalid!"};
+
+    return wordScores(first) + wordScores(last);
+    
+}
+
 /** checks a word for strange characters and returns true or false */
 
-function includesWeirdChar(letter) {
-    if (!LETTER_VALUES[letter.toUpperCase()]) return true;
+function includesWeirdChar(word) {
+    for (let letter of word) {
+        if (!LETTER_VALUES[letter.toUpperCase()]) {
+            return true;
+        } 
+    }
     return false;
-  }
+}
 
 /** when the form submits, calculate total of each name and append to page */
+
+function wordAsNumbers(word) {
+    if (includesWeirdChar(word)) {return "Invalid!"}
+    
+    let numbers = [];
+    word.split('').forEach(char => numbers.push(LETTER_VALUES[char.toUpperCase()]));
+
+    return numbers;
+}
 
 function formSubmit(evt) {
     evt.preventDefault();
@@ -74,7 +94,7 @@ function formSubmit(evt) {
     returnMsg.setAttribute("id", "return-message");
     container.append(returnMsg);
     
-    returnMsg.innerText = `${firstName}: ${wordScores(firstName)} | ${lastName}: ${wordScores(lastName)} | Total: ${wordScores(firstName) + wordScores(lastName)}`;
+    returnMsg.innerText = `${firstName}: ${wordAsNumbers(firstName)} = ${wordScores(firstName)} | ${lastName}: ${wordAsNumbers(lastName)} = ${wordScores(lastName)} | Total: ${totalNameScore(firstName, lastName)}`;
     
     form.reset();
 }
